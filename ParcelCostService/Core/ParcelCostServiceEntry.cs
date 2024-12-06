@@ -16,12 +16,17 @@ namespace ParcelCostService.Core
                 throw new ArgumentException("Order must have at least one parcel.");
             }
 
-            var products = new List<Product>()
-            {
-                new Product("ParcelA", 10)
-            };
+            var responseObject = new ParcelOrderResponse();
 
-            return new ParcelOrderResponse(products);
+            foreach (var parcel in request.Parcels)
+            {
+                var type = "Small";
+                var cost = 10;
+                var product = new Product(type, cost);
+                responseObject.AddProduct(product);
+            }
+
+            return responseObject;
         }
     }
 }

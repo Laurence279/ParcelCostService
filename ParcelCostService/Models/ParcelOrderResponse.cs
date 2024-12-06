@@ -11,10 +11,14 @@ namespace ParcelCostService.Models
         public List<Product> Products { get; private set; }
         public decimal TotalCost => Products.Sum(p => p.Cost);
 
-        public ParcelOrderResponse(List<Product> products)
+        public ParcelOrderResponse()
         {
-            if (products == null) throw new ArgumentNullException(nameof(products));
-            this.Products = products;
+            this.Products = new List<Product>();
+        }
+
+        public void AddProduct(Product product)
+        {
+            this.Products.Add(product);
         }
     }
 }

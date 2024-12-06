@@ -1,4 +1,6 @@
-﻿namespace ParcelCostService.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ParcelCostService.Models
 {
     public class Product
     {
@@ -7,6 +9,7 @@
 
         public Product(string type, decimal cost)
         {
+            if (cost < 0) throw new ArgumentException("Cost should not be less than zero.");
             this.Type = type;
             this.Cost = cost;
         }
