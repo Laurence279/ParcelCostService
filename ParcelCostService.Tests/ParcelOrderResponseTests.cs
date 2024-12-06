@@ -10,7 +10,7 @@ namespace ParcelCostService.Tests
         [Fact]
         public void ParcelOrderResponse_TotalCostShouldBe0OrHigher()
         {
-            var product = new Product("Small", 0);
+            var product = new Product(ParcelType.Small, 0);
 
             var response = new ParcelOrderResponse();
             response.AddProduct(product);
@@ -21,8 +21,8 @@ namespace ParcelCostService.Tests
         [Fact]
         public void ParcelOrderResponse_TotalCostShouldSumProducts()
         {
-            var product1 = new Product("Small", 10);
-            var product2 = new Product("Small", 20);
+            var product1 = new Product(ParcelType.Small, 10);
+            var product2 = new Product(ParcelType.Small, 20);
 
             var response = new ParcelOrderResponse();
             response.AddProduct(product1);

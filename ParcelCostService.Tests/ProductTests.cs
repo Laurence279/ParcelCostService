@@ -9,7 +9,7 @@ namespace ParcelCostService.Tests
         [Fact]
         public void Product_NegativeCost_ShouldThrowException()
         {
-            Assert.Throws<ArgumentException>(() => new Product("Small", -10));
+            Assert.Throws<ArgumentException>(() => new Product(ParcelType.Small, -10));
         }
     }
 }

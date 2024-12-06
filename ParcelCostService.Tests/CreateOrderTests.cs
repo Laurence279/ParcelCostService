@@ -35,5 +35,31 @@ namespace ParcelCostService.Tests
 
             Assert.NotEmpty(actual.Products);
         }
+
+        [Fact]
+        public void CreateOrder_Given3Parcels_ShouldReturnListWith3Items()
+        {
+            var request = new ParcelOrderRequest(new List<Parcel>()
+            {
+                new Parcel()
+                {
+                    Size = 10
+                },
+                new Parcel()
+                {
+                    Size = 60
+                },
+                new Parcel()
+                {
+                    Size = 150
+                }
+            });
+
+            var expected = 3;
+
+            var actual = this._fixture.ParcelCostServiceEntry.CreateOrder(request);
+
+            Assert.Equal(expected, actual.Products.Count);
+        }
     }
 }

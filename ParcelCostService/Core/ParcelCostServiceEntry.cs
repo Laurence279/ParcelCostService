@@ -1,4 +1,7 @@
-﻿using ParcelCostService.Models;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ParcelCostService.Models;
+using ParcelCostService.Services;
 
 namespace ParcelCostService.Core
 {
@@ -15,18 +18,39 @@ namespace ParcelCostService.Core
             {
                 throw new ArgumentException("Order must have at least one parcel.");
             }
+            if (request.Parcels.Any(x => x.Size <= 0 || double.IsNaN(x.Size)))
+            {
+                throw new ArgumentException("Parcel size should be more than zero and a number.");
+            }
 
             var responseObject = new ParcelOrderResponse();
 
             foreach (var parcel in request.Parcels)
             {
-                var type = "Small";
-                var cost = 10;
+                var type = GetParcelType(parcel);
+                var cost = GetParcelCost(type);
                 var product = new Product(type, cost);
                 responseObject.AddProduct(product);
             }
 
             return responseObject;
+        }
+
+        private static ParcelType GetParcelType(Parcel parcel)
+        {
+            var type = parcel.Size switch
+            {
+                < 10 => ParcelType.Small,
+                <= 50 => ParcelType.Medium,
+                < 100 => ParcelType.Large,
+                >= 100 => ParcelType.XLarge,
+                _ => throw new ArgumentException($"Invalid size given: {parcel.Size}")
+            };
+            return type;
+        }
+
+        private decimal GetParcelCost(ParcelType type)
+        {
         }
     }
 }
