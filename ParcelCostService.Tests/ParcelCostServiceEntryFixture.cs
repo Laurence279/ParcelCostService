@@ -8,9 +8,12 @@ namespace ParcelCostService.Tests
     {
         public ParcelCostServiceEntry ParcelCostServiceEntry { get; private set; }
 
+        public StandardPricingService PricingService { get; private set; }
+
         public ParcelCostServiceEntryFixture()
         {
-            this.ParcelCostServiceEntry = new ParcelCostServiceEntry(new StandardPricingService());
+            this.PricingService = new StandardPricingService();
+            this.ParcelCostServiceEntry = new ParcelCostServiceEntry(this.PricingService);
         }
     }
 }

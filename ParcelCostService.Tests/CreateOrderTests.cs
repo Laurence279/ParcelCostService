@@ -61,5 +61,63 @@ namespace ParcelCostService.Tests
 
             Assert.Equal(expected, actual.Products.Count);
         }
+
+        [Fact]
+        public void CreateOrder_SpeedyCheckoutSelectedWith4Parcels_ShouldReturnListWith5Items()
+        {
+            var parcels = new List<Parcel>()
+            {
+                new Parcel()
+                {
+                    Size = 20
+                },
+                new Parcel()
+                {
+                    Size = 30
+                },
+                new Parcel()
+                {
+                    Size = 100
+                }
+            };
+
+            var request = new ParcelOrderRequest(parcels)
+            {
+                SpeedyCheckout = true
+            };
+
+            var expected = 4;
+
+            var actual = this._fixture.ParcelCostServiceEntry.CreateOrder(request);
+
+            Assert.Equal(expected, actual.Products.Count);
+        }
+
+
+        [Fact]
+        public void CreateOrder_SpeedyCheckoutSelectedWithStandardPricing_ShouldDoubleCostOfParcels()
+        {
+            var parcels = new List<Parcel>()
+            {
+                new Parcel()
+                {
+                    Size = 20
+                },
+                new Parcel()
+                {
+                    Size = 15
+                }
+            };
+
+            var request = new ParcelOrderRequest(parcels)
+            {
+                SpeedyCheckout = true
+            };
+
+            var response = this._fixture.ParcelCostServiceEntry.CreateOrder(request);
+            var expectedTotal = 32;
+
+            Assert.Equal(expectedTotal, response.TotalCost);
+        }
     }
 }

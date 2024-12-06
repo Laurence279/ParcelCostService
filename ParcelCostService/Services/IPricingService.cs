@@ -4,6 +4,8 @@ namespace ParcelCostService.Services
 {
     public interface IPricingService
     {
-        public decimal GetCost(ParcelType parcelType);
+        public decimal GetParcelCost(ParcelType parcelType);
+
+        public decimal GetSpeedyCheckoutCost(List<BaseProduct> products);
     }
 }

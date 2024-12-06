@@ -25,15 +25,25 @@ namespace ParcelCostService.Core
                 throw new ArgumentException("Parcel size should be more than zero and a number.");
             }
 
-            var responseObject = new ParcelOrderResponse();
+            var products = new List<BaseProduct>();
 
             foreach (var parcel in request.Parcels)
             {
                 var type = GetParcelType(parcel);
                 var cost = GetParcelCost(type);
-                var product = new Product(type, cost);
-                responseObject.AddProduct(product);
+                var product = new ParcelProduct(type, cost);
+                products.Add(product);
             }
+
+            if (request.SpeedyCheckout)
+            {
+                products.Add(new BaseProduct(this._pricingService.GetSpeedyCheckoutCost(products), "Speedy checkout"));
+            };
+
+            var responseObject = new ParcelOrderResponse()
+            {
+                Products = products
+            };
 
             return responseObject;
         }
@@ -53,7 +63,7 @@ namespace ParcelCostService.Core
 
         private decimal GetParcelCost(ParcelType type)
         {
-            return _pricingService.GetCost(type);
+            return _pricingService.GetParcelCost(type);
         }
     }
 }

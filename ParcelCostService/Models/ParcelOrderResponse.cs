@@ -8,15 +8,15 @@ namespace ParcelCostService.Models
 {
     public class ParcelOrderResponse
     {
-        public List<Product> Products { get; private set; }
+        public List<BaseProduct> Products { get; set; }
         public decimal TotalCost => Products.Sum(p => p.Cost);
 
         public ParcelOrderResponse()
         {
-            this.Products = new List<Product>();
+            this.Products = new List<BaseProduct>();
         }
 
-        public void AddProduct(Product product)
+        public void AddProduct(BaseProduct product)
         {
             this.Products.Add(product);
         }

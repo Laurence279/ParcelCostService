@@ -20,9 +20,14 @@ namespace ParcelCostService.Services
             _priceDictionary[ParcelType.XLarge] = 25;
         }
 
-        public decimal GetCost(ParcelType parcelType)
+        public decimal GetParcelCost(ParcelType parcelType)
         {
             return _priceDictionary[parcelType];
+        }
+
+        public decimal GetSpeedyCheckoutCost(List<BaseProduct> products)
+        {
+            return products.Sum(p => p.Cost);
         }
     }
 }
