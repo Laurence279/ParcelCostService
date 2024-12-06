@@ -1,4 +1,6 @@
 ﻿using ParcelCostService.Core;
+using ParcelCostService.Models;
+using ParcelCostService.Services;
 
 namespace ParcelCostService.Tests
 {
@@ -8,7 +10,7 @@ namespace ParcelCostService.Tests
 
         public ParcelCostServiceEntryFixture()
         {
-            this.ParcelCostServiceEntry = new ParcelCostServiceEntry();
+            this.ParcelCostServiceEntry = new ParcelCostServiceEntry(new StandardPricingService());
         }
     }
 }

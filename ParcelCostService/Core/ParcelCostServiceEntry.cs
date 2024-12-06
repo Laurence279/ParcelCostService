@@ -7,9 +7,11 @@ namespace ParcelCostService.Core
 {
     public class ParcelCostServiceEntry
     {
-        public ParcelCostServiceEntry()
-        {
+        private readonly IPricingService _pricingService;
 
+        public ParcelCostServiceEntry(IPricingService pricingService)
+        {
+            _pricingService = pricingService;
         }
 
         public ParcelOrderResponse CreateOrder(ParcelOrderRequest request)
@@ -51,6 +53,7 @@ namespace ParcelCostService.Core
 
         private decimal GetParcelCost(ParcelType type)
         {
+            return _pricingService.GetCost(type);
         }
     }
 }
